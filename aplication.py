@@ -2,7 +2,10 @@ from flask import Flask , g, render_template, request, session
 from helpers import  login_require
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
+from flask_session import Session
+from tempfile import mkdtemp
 
+app = Flask(__name__)
 # here we define our objet bd that help us to conect to the database
 DATABSE  =  'cmslibmed.db'
 def get_db():
@@ -11,12 +14,18 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
     return db
 
-app = Flask(__name__)
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
+
+#her we configure our sessions
+app.config["SESSION_FILE_DIR"] = mkdtemp()
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
 
 @app.route('/')
 @login_require
@@ -28,7 +37,16 @@ def main():
 @login_require
 def doctors():
     if request.method == "GET":
-        return 'here go the doctos'
+        return render_template("doctos.html")
+    else:
+        doctor_name = request.form.get("name")
+        doctor_espc = request.form.get("especiality")
+        doctor_phone = request.form.get("phone")
+        doctor_address = request.form.get("address")
+        if not doctor_name or not doctor_espc or not doctor_phone or not doctor_address:
+            return "something is missin"
+        else:
+            return "all ok add to data base"
 
 # we need to see the filter for month or per week we will add search from one time to another
 
@@ -49,7 +67,7 @@ def reports():
 def login():
     if request.method == "POST":
         #ensure username was submited
-        if not request.form.get("username"):
+        if not request.form.get("user"):
             return "you need to add a username"
        # here we check if we have a password
         if not request.form.get("password"):
@@ -58,14 +76,15 @@ def login():
        #im need to connect to the data base ana select the user
         with sqlite3.connect("cmslibmed.db") as con:
             cur = con.cursor()
-            user_exist = cur.execute("SELECT * FROM users WHERE user= (?)", request.form("username"))
-            if len(user_exist) != 1:
-                return "this user dosent exits"
-
-           # now we need to check the user password it is the same
-            if not check_password_hash(user_exist[0]['pasword'], request.form.get("password")):
+            user_exist = cur.execute("SELECT * FROM user")
+            password = request.form.get("password")
+            response = user_exist.fetchall()
+            print(response)
+            if not check_password_hash(response[0][2], password):
                return "the password doesnt mach"
-            session["user_id"] = user_exist[0]['id']
+            session["user_id"] = response[0][0]
+            print(session["user_id"])
+            return render_template("main.html")
 
     else:
         return render_template("login.html")

@@ -1,5 +1,22 @@
-{ extends "layout.html" %}
+{% extends "layout.html" %}
 
 {% block main%}
-<h1> hello from tailwind</h1>
+<table class="w-screen text-xs">
+    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <td class="py-3 px-2 text-xs text-center">№</td>
+        <td class="py-3 px-2 text-xs text-center">Дата</td>
+        <td class="py-3 px-2 text-xs text-center">Время поступление вызова</td>
+        <td class="py-3 px-2 text-xs text-center">Время отзванивание вызова</td>
+        <td class="py-3 px-2 text-xs text-center">Ф.И.О</td>
+        <td class="py-3 px-2 text-xs text-center">Возраст</td>
+        <td class="py-3 px-2 text-xs text-center">Адрес вызова</td>
+        <td class="py-3 px-2 text-xs text-center">Тел-н</td>
+        <td class="py-3 px-2 text-xs text-center">Повод</td>
+        <td class="py-3 px-2 text-xs text-center">Диогноз</td>
+        <td class="py-3 px-2 text-xs text-center">Оказание помощи.</td>
+        <td class="py-3 px-2 text-xs text-center">Исход</td>
+        <td class="py-3 px-2 text-xs text-center">Врач, фельдшер, водител</td>
+        <td class="py-3 px-2 text-xs text-center">Диспетчер</td>
+    </tr>
+</table>
 {%endblock%}
