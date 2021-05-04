@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <table> 
+        <tr>
+            <th>Name</th>
+            <th>especiality </th>
+            <th>phone </th>
+            <th> address</th>
+        </tr>
+        {% for paramedic in paramedics %}
+        <tr>    
+            <td>{{paramedic[1]}}</td>
+            <td>{{paramedic[2]}}</td>
+            <td>{{paramedic[3]}}</td>
+            <td>{{paramedic[4]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <form action="/paramedics" method="post">
+        <input type="text" name="name" placeholder="name">
+        <input type="text" name="especiality" placeholder="especiality">
+        <input type="text" name="phone" placeholder="phone">
+        <input type="text" name="address" placeholder="address">
+        <button type="submit"> add paramedic </button>
+    </form>
+{% endblock %}

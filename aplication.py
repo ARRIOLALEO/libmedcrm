@@ -119,8 +119,42 @@ def clients():
             exist_client = cur.execute("SELECT * FROM clients WHERE phone=(?)" ,(request.form.get("phone"),))
             was_found = exist_client.fetchall()
             if len(was_found) == 0:
-                return render_template("addcleint.html")
+                get_doctors = cur.execute("SELECT * FROM doctors")
+                all_doctors = get_doctors.fetchall()
+                return render_template("addcleint.html", doctors=all_doctors)
             else:
                 return "customer was found and we can add a new order"
     else:
         return render_template("searchcustomer.html")
+
+@app.route("/paramedics", methods=["GET", "POST"])
+@login_require
+def paramedics():
+    if request.method == "POST":
+        doctor_name     = request.form.get("name")
+        doctor_spc      = request.form.get("especiality")
+        doctor_phone    = request.form.get("phone")
+        doctor_address  = request.form.get("address")
+        if not doctor_name or not doctor_spc or not doctor_phone or not doctor_address:
+            return "you need to fill all the fields"
+        else:
+            with sqlite3.connect(db_path) as conn:
+                cur = conn.cursor()
+                exist_paramedic = cur.execute("SELECT * FROM paramedics WHERE phone=(?)", (doctor_phone,))
+                alredy_in_db = exist_paramedic.fetchall()
+                if not alredy_in_db:
+                    cur.execute("INSERT INTO paramedics(name, especiality, phone, address) VALUES(?, ?, ?, ?)",
+                            (doctor_name, doctor_spc, doctor_phone, doctor_address, ))
+                    return redirect("/paramedics") 
+                else:
+                    return  "somthing is happening here"
+    else:
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            paramedics_all = cur.execute("SELECT * FROM paramedics")
+            paramedics = paramedics_all.fetchall()
+            return render_template("paramedics.html",paramedics=paramedics)
+
+
+
+

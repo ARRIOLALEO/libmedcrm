@@ -12,7 +12,11 @@
      <input type="text" placeholder="ДИОГНОЗ">
      <input type="text" placeholder="ОКАЗАНИЕ ПОМОЩИ.">
      <input type="text" placeholder="ИСХОД">
-     <input type="" placeholder="ВРАЧ">
+     <select name="doctor1">
+        {% for doctor in doctors %}
+            <option value={{doctor[0]}}> {{doctor[1]}} </option>
+        {% endfor %}
+     </select>
      <input type="" placeholder=" ФЕЛЬДШЕР">
      <input type="" placeholder="ВОДИТЕЛ">
      <input type="text" placeholder="ДИСПЕТЧЕР">
