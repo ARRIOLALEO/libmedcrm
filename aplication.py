@@ -1,9 +1,13 @@
-from flask import Flask , g, render_template, request, session
+from flask import Flask , g, render_template, request, session, redirect
 from helpers import  login_require
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
 from flask_session import Session
 from tempfile import mkdtemp
+import os.path
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "cmslibmed.db")
 
 app = Flask(__name__)
 # here we define our objet bd that help us to conect to the database
@@ -37,7 +41,11 @@ def main():
 @login_require
 def doctors():
     if request.method == "GET":
-        return render_template("doctos.html")
+        with sqlite3.connect("cmslibmed.db") as conn:
+            cur = conn.cursor()
+            doctors = cur.execute("SELECT * FROM doctors");
+            all_doctors = doctors.fetchall()
+            return render_template("doctos.html" , doctors=all_doctors)
     else:
         doctor_name = request.form.get("name")
         doctor_espc = request.form.get("especiality")
@@ -53,7 +61,7 @@ def doctors():
                 if not there_is_doctor:
                     cur.execute("INSERT INTO doctors(name, especiality, phone, adress) VALUES(?, ?, ? ,?)",
                             (doctor_name, doctor_espc, doctor_phone, doctor_address))
-                    return "data was added fine to the data base"
+                    return redirect("/doctors")
                 else:
                     return "the doctor alredy exist on the data base the same phone"
 
@@ -91,7 +99,6 @@ def login():
             user_exist = cur.execute("SELECT * FROM user")
             password = request.form.get("password")
             response = user_exist.fetchall()
-            print(response)
             if not check_password_hash(response[0][2], password):
                return "the password doesnt mach"
             session["user_id"] = response[0][0]
@@ -103,3 +110,17 @@ def login():
 
 # add send sms will be great to add to the system
 
+@app.route('/clients', methods=["GET", "POST"])
+@login_require
+def clients():
+    if request.method == "POST":
+        with sqlite3.connect(db_path) as con:
+            cur = con.cursor()
+            exist_client = cur.execute("SELECT * FROM clients WHERE phone=(?)" ,(request.form.get("phone"),))
+            was_found = exist_client.fetchall()
+            if len(was_found) == 0:
+                return render_template("addcleint.html")
+            else:
+                return "customer was found and we can add a new order"
+    else:
+        return render_template("searchcustomer.html")

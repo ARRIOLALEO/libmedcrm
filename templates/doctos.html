@@ -2,11 +2,19 @@
     {% block main %}
         <table>
             <tr class="bg-gray-200 text-gray-600 text-xl text-center">
-                <td>Name Doctor</td>
-                <td>Especiality</td>
-                <td>Phone Adress</td>
-                <td>Adress</td>
+                <th>Name Doctor</th>
+                <th>Especiality</th>
+                <th>Phone Adress</th>
+                <th>Adress</td>
             </tr>
+            {% for doctor in doctors%}
+            <tr>
+                <td>{{doctor[1]}}</td>
+                <td>{{doctor[2]}}</td>
+                <td>{{doctor[3]}}</td>
+                <td>{{doctor[4]}}</td>
+            </tr>
+            {%endfor%}
         </table>
 
         <form action="/doctors" method="post">
