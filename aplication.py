@@ -46,7 +46,19 @@ def doctors():
         if not doctor_name or not doctor_espc or not doctor_phone or not doctor_address:
             return "something is missin"
         else:
-            return "all ok add to data base"
+            with sqlite3.connect("cmslibmed.db") as conn:
+                cur = conn.cursor()
+                doctor_exist = cur.execute("SELECT * FROM doctors WHERE phone=(?)",(doctor_phone,))
+                there_is_doctor = doctor_exist.fetchall()
+                if not there_is_doctor:
+                    cur.execute("INSERT INTO doctors(name, especiality, phone, adress) VALUES(?, ?, ? ,?)",
+                            (doctor_name, doctor_espc, doctor_phone, doctor_address))
+                    return "data was added fine to the data base"
+                else:
+                    return "the doctor alredy exist on the data base the same phone"
+
+
+
 
 # we need to see the filter for month or per week we will add search from one time to another
 
