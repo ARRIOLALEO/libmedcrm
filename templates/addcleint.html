@@ -17,8 +17,24 @@
             <option value={{doctor[0]}}> {{doctor[1]}} </option>
         {% endfor %}
      </select>
-     <input type="" placeholder=" ФЕЛЬДШЕР">
-     <input type="" placeholder="ВОДИТЕЛ">
-     <input type="text" placeholder="ДИСПЕТЧЕР">
+     <select name="paramedic">
+        {%for paramedic in paramedics %}
+            <option value={{paramedic[0]}}>{{paramedic[1]}}<option>
+        {% endfor %}
+     </select>
+     <select name="driver" >
+         {% for driver in drivers %}
+            <option value={{ driver[0]}}>{{driver[1]}}</option>
+         {% endfor %}
+     </select>
+     <select name="dispacher">
+        {%for dispacher in dispachers %}
+            <option value={{dispacher[0]}}> {{dispacher[1]}}</option>
+        {% endfor %}
+     </select>
      </form>
      {% endblock %}
+
+
+
+

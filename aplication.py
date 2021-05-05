@@ -121,7 +121,14 @@ def clients():
             if len(was_found) == 0:
                 get_doctors = cur.execute("SELECT * FROM doctors")
                 all_doctors = get_doctors.fetchall()
-                return render_template("addcleint.html", doctors=all_doctors)
+                get_paramedics = cur.execute("SELECT * FROM paramedics")
+                all_paramedics = get_paramedics.fetchall()
+                get_drivers = cur.execute("SELECT * FROM drivers")
+                all_drivers = get_drivers.fetchall()
+                get_dispachers = cur.execute("SELECT * FROM dispachers")
+                all_dispachers = get_dispachers.fetchall()
+                return render_template("addcleint.html",
+                        doctors=all_doctors, paramedics=all_paramedics, drivers=all_drivers, dispachers = all_dispachers)
             else:
                 return "customer was found and we can add a new order"
     else:
