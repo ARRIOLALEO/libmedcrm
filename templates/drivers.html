@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+    {% block main %}
+
+        <table>
+            <tr>
+                <th>
+                    driver name
+                </th>
+                <th>
+                    tel
+                </th>
+                <th>
+                    adress
+                </th>
+            </tr>
+            {% for driver in drivers%}
+            <tr>
+                <td>{{driver[1]}}</td>
+                <td>{{driver[2]}}</td>
+                <td>{{driver[3]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <form action="/drivers" method="post">
+            <input name=name type="text" placeholder="name">
+            <input name="phone" type="text" placeholder="phone">
+            <input name="address" type="text" placeholder="address">
+            <button type="submit"> add a new driver</button>
+        </form>
+    {% endblock %}

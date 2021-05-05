@@ -155,6 +155,58 @@ def paramedics():
             paramedics = paramedics_all.fetchall()
             return render_template("paramedics.html",paramedics=paramedics)
 
+@app.route("/drivers", methods=["GET","POST"])
+@login_require
+def drivers():
+    if request.method == "POST":
+        driver_name = request.form.get("name")
+        driver_phone = request.form.get("phone")
+        driver_address = request.form.get("address")
+        if not driver_name or not driver_phone or  not  driver_address:
+            return "here we have some issues"
+        else:
+            with sqlite3.connect(db_path) as conn:
+                cur = conn.cursor()
+                exist_driver = cur.execute("SELECT * FROM drivers WHERE phone=(?)",(driver_phone,))
+                alredy_driver_in_db = exist_driver.fetchall()
+                if not alredy_driver_in_db:
+                    cur.execute("INSERT INTO drivers(name, phone, adress) VALUES(?, ?, ?)",(driver_name, driver_phone, driver_address ,))
+                    return redirect("/drivers")
+                else:
+                    return "the driver alredy exist in the db"
+    else:
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            all_drivers_in_db = cur.execute("SELECT * FROM drivers")
+            all_drivers = all_drivers_in_db.fetchall()
+            return render_template("drivers.html",drivers=all_drivers)
+
+@app.route("/dispachers", methods=["GET","POST"])
+@login_require
+def dispachers():
+    if request.method == "POST":
+        dispacher_name = request.form.get("name")
+        dispacher_phone = request.form.get("phone")
+        dispacher_address = request.form.get("address")
+        if not dispacher_name or not dispacher_phone or not dispacher_address:
+            return "some information is missing"
+        else:
+            with sqlite3.connect(db_path) as conn:
+                cur = conn.cursor()
+                exist_dispacher = cur.execute("SELECT * FROM  dispachers WHERE phone=(?)",(dispacher_phone, ))
+                alredy_dispacher = exist_dispacher.fetchall()
+                if not alredy_dispacher:
+                    cur.execute("INSERT INTO dispachers(name, phone, address) VALUES(?, ?, ?)",
+                            (dispacher_name, dispacher_phone, dispacher_address,))
+                    return redirect("/dispachers")
+                else:
+                    return "this dispacher is alredy in the data base"
+
+    else:
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            all_dispachers = cur.execute("SELECT * FROM dispachers")
+            return render_template("dispachers.html", dispachers=all_dispachers)
 
 
 

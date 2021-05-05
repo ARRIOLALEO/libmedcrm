@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block main %}   
+<table>
+        <tr>
+            <th>name </th>
+            <th> phone</th>
+            <th> address</th>
+        </tr>
+        {% for dispacher in dispachers %}
+        <tr>
+            <td> {{ dispacher[1] }} </td>
+            <td> {{ dispacher[2] }} </td>
+            <td> {{ dispacher[3] }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <form action="/dispachers" method="post">
+            <input type="text" name="name" placeholder="name">
+            <input type="text" name="phone" placeholder="phone">
+            <input type="text" name="address" placeholder="address">
+            <button type="submit"> add a dipacher </button>
+    </form>
+ {% endblock %}
