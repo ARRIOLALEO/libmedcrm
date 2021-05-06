@@ -18,5 +18,23 @@
         <td class="py-3 px-2 text-xs text-center">Врач, фельдшер, водител</td>
         <td class="py-3 px-2 text-xs text-center">Диспетчер</td>
     </tr>
+    {%for customer in customers %}
+    <tr>
+        <td>{{customer[0]}}</td>
+        <td>{{customer[1]}}</td>
+        <td>{{customer[2]}}</td>
+        <td>{{customer[3]}}</td>
+        <td>{{customer[14]}}</td>
+        <td>{{customer[5]}}</td>
+        <td>{{customer[16]}}</td>
+        <td>{{customer[15]}}</td>
+        <td>{{customer[6]}}</td>
+        <td>{{customer[7]}}</td>
+        <td>{{customer[8]}}</td>
+        <td>{{customer[9]}}</td>
+        <td>{{customer[19]}} /{{customer[24]}} / {{customer[29]}}</td>
+        <td>{{customer[33]}}
+    </tr>
+    {% endfor %}
 </table>
 {%endblock%}

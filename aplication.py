@@ -34,7 +34,12 @@ Session(app)
 @app.route('/')
 @login_require
 def main():
-    return render_template("main.html")
+    with sqlite3.connect(db_path) as conn:
+        cur = conn.cursor()
+        all_orders = cur.execute("select * FROM orders  INNER JOIN clients  ON clients.id=orders.id_client INNER JOIN doctors ON orders.doctor=doctors.id INNER JOIN paramedics ON paramedics.id = orders.paramedic INNER JOIN drivers ON drivers.id=orders.driver INNER JOIN dispachers ON dispachers.id=orders.dispacher")
+        customers = all_orders.fetchall()
+        print(customers[0])
+        return render_template("main.html",customers=customers)
 
 # we also need to add all the doctos
 @app.route('/doctors', methods=["GET","POST"])
@@ -102,8 +107,7 @@ def login():
             if not check_password_hash(response[0][2], password):
                return "the password doesnt mach"
             session["user_id"] = response[0][0]
-            print(session["user_id"])
-            return render_template("main.html")
+            return redirect("/")
 
     else:
         return render_template("login.html")
@@ -220,10 +224,10 @@ def dispachers():
 @login_require
 def addorder():
     if request.method == "POST":
-        date_in = request.form.get("date")
+        date_in = request.form.get("data")
         time_in = request.form.get("time")
         time_out = request.form.get("time2")
-        name_pacient = request.form.get("name")
+        name = request.form.get("name")
         age = request.form.get("age")
         address = request.form.get("address")
         tel = request.form.get("tel")
@@ -235,9 +239,16 @@ def addorder():
         paramedic=request.form.get("paramedic")
         driver=request.form.get("driver")
         dispacher=request.form.get("dispacher")
-
         customer_type = request.form.get("type")
         if customer_type == "1":
-            return "all fine over here"
+            with sqlite3.connect(db_path) as conn:
+                cur = conn.cursor()
+                cur.execute("INSERT INTO clients(name, phone, address) VALUES(?, ?, ?)",(name, tel, address,))
+                get_user =  cur.execute("SELECT id FROM clients WHERE phone =(?)",(tel,))
+                the_user = get_user.fetchall()
+                print(date_in)
+                # here i will add to my oders the new oder
+                cur.execute("INSERT INTO orders(datein, timein, timeout, id_client, age, description, diagnost, help, recomendation, doctor, paramedic, driver, dispacher) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",(date_in, time_in, time_out, the_user[0][0], age, information, diagnost, prescription, recomendation, doctor, paramedic, driver, dispacher))
+            return redirect("/")
         else:
             return "something is hapening"
