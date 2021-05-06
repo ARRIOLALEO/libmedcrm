@@ -1,18 +1,18 @@
 {% extends "layout.html" %}
     {% block main %}
-    <form action="/makeanorder" mehthod="post">
-     <input type="" placeholder="ДАТА" name="data">
-     <input type="" placeholder="ВРЕМЯ ПОСТУПЛЕНИЕ ВЫЗОВА">
-     <input type="" placeholder="ВРЕМЯ ОТЗВАНИВАНИЕ ВЫЗОВА">
-     <input type="text" placeholder="Ф.И.О" name="name">
-     <input type="text" placeholder="ВОЗРАСТ">
-     <input type="text" placeholder="АДРЕС ВЫЗОВА">
-     <input type="text" placeholder="ТЕЛ-Н">
-     <input type="text" placeholder="ПОВОД">
-     <input type="text" placeholder="ДИОГНОЗ">
-     <input type="text" placeholder="ОКАЗАНИЕ ПОМОЩИ.">
-     <input type="text" placeholder="ИСХОД">
-     <select name="doctor1">
+    <form action="/addorder" method="post">
+     <input type="TEXT"  name="data" id="data">
+     <input type="TEXT" name="time"  id="time">
+     <input type="TIME" placeholder="ВРЕМЯ ОТЗВАНИВАНИЕ ВЫЗОВА" name="time2" required>
+     <input type="text" placeholder="Ф.И.О" name="name" name="name">
+     <input type="text" placeholder="ВОЗРАСТ" name="age">
+     <input type="text" placeholder="АДРЕС ВЫЗОВА" name="address">
+     <input type="TEL" placeholder="ТЕЛ-Н" name="tel">
+     <textarea row="10" col="45" name="information" placeholder="ПОВОД"></textarea>
+     <textarea row="10" col="45" name="diagnost" placeholder="ДИОГНОЗ"></textarea>
+     <textarea row="10" col="45" name="prescription" placeholder="ОКАЗАНИЕ ПОМОЩИ."></textarea>
+     <textarea row="10" col="45"name="exodo" placeholder="ИСХОД"></textarea>
+     <select name="doctor">
         {% for doctor in doctors %}
             <option value={{doctor[0]}}> {{doctor[1]}} </option>
         {% endfor %}
@@ -32,9 +32,28 @@
             <option value={{dispacher[0]}}> {{dispacher[1]}}</option>
         {% endfor %}
      </select>
+     <input type="HIDDEN" value="1" name="type">
+     <button type="submit">add to database</button>
+
      </form>
+     
+
+     <script>
+             data = document.getElementById("data")
+             function joinDate(t, a, s){
+                 function format(m){
+                   let f = new Intl.DateTimeFormat('ru',m)
+                  return f.format(t)    
+                 }
+                 return a.map(format).join(s)
+             }
+             
+
+             let a = [{day: 'numeric'}, {month:'short'}, {year:'numeric'}]
+             let theTimeNow = new Date()
+             data.value = joinDate(theTimeNow, a, '-') 
+             document.getElementById("time").value= `${theTimeNow.getHours()}:${ theTimeNow.getMinutes()}`
+         </script>
      {% endblock %}
-
-
 
 

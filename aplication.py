@@ -216,4 +216,28 @@ def dispachers():
             return render_template("dispachers.html", dispachers=all_dispachers)
 
 
+@app.route("/addorder",methods=["GET", "POST"])
+@login_require
+def addorder():
+    if request.method == "POST":
+        date_in = request.form.get("date")
+        time_in = request.form.get("time")
+        time_out = request.form.get("time2")
+        name_pacient = request.form.get("name")
+        age = request.form.get("age")
+        address = request.form.get("address")
+        tel = request.form.get("tel")
+        information = request.form.get("information")
+        diagnost = request.form.get("diagnost")
+        prescription=request.form.get("prescription")
+        recomendation=request.form.get("exodo")
+        doctor= request.form.get("doctor")
+        paramedic=request.form.get("paramedic")
+        driver=request.form.get("driver")
+        dispacher=request.form.get("dispacher")
 
+        customer_type = request.form.get("type")
+        if customer_type == "1":
+            return "all fine over here"
+        else:
+            return "something is hapening"
