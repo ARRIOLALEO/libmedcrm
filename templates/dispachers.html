@@ -14,10 +14,10 @@
         </tr>
         {% endfor %}
     </table>
-    <form action="/dispachers" method="post">
+    <form action="/dispachers" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <input type="text" name="name" placeholder="name">
             <input type="text" name="phone" placeholder="phone">
             <input type="text" name="address" placeholder="address">
-            <button type="submit"> add a dipacher </button>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded focur:outline-none focus:shadow-outline"> add a dipacher </button>
     </form>
  {% endblock %}

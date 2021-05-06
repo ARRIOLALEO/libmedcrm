@@ -2,3 +2,9 @@
 body{
     background-color:red !importan;
 }
+.py-3 {
+    max-width: 9em;
+}
+.border-b {
+    text-align: center;
+}

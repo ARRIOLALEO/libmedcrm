@@ -36,7 +36,7 @@ Session(app)
 def main():
     with sqlite3.connect(db_path) as conn:
         cur = conn.cursor()
-        all_orders = cur.execute("select * FROM orders  INNER JOIN clients  ON clients.id=orders.id_client INNER JOIN doctors ON orders.doctor=doctors.id INNER JOIN paramedics ON paramedics.id = orders.paramedic INNER JOIN drivers ON drivers.id=orders.driver INNER JOIN dispachers ON dispachers.id=orders.dispacher")
+        all_orders = cur.execute("select * FROM orders  INNER JOIN clients  ON clients.id=orders.id_client INNER JOIN doctors ON orders.doctor=doctors.id INNER JOIN paramedics ON paramedics.id = orders.paramedic INNER JOIN drivers ON drivers.id=orders.driver INNER JOIN dispachers ON dispachers.id=orders.dispacher LIMIT 60")
         customers = all_orders.fetchall()
         print(customers[0])
         return render_template("main.html",customers=customers)
