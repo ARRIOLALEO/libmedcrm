@@ -4,10 +4,10 @@
      <input type="TEXT"  name="data" id="data">
      <input type="TEXT" name="time"  id="time">
      <input type="TIME" placeholder="ВРЕМЯ ОТЗВАНИВАНИЕ ВЫЗОВА" name="time2" required>
-     <input type="text" placeholder="Ф.И.О" name="name">
+     <input type="text" placeholder="Ф.И.О" value={{client[0][1]}} name="name" disabled >
      <input type="text" placeholder="ВОЗРАСТ" name="age">
-     <input type="text" placeholder="АДРЕС ВЫЗОВА" name="address">
-     <input type="TEL" placeholder="ТЕЛ-Н" name="tel" id="phone">
+     <input type="text" placeholder="АДРЕС ВЫЗОВА" name="address" value={{client[0][3]}} disabled>
+     <input type="TEL" placeholder="ТЕЛ-Н" name="tel" id="phone" value={{client[0][2]}} disabled>
      <textarea row="10" col="45" name="information" placeholder="ПОВОД"></textarea>
      <textarea row="10" col="45" name="diagnost" placeholder="ДИОГНОЗ"></textarea>
      <textarea row="10" col="45" name="prescription" placeholder="ОКАЗАНИЕ ПОМОЩИ."></textarea>
@@ -32,7 +32,8 @@
             <option value={{dispacher[0]}}> {{dispacher[1]}}</option>
         {% endfor %}
      </select>
-     <input type="HIDDEN" value="1" name="type">
+     <input type="HIDDEN" value="2" name="type">
+     <input type="HIDDEN" value={{client[0][0]}} name="client_id">
      <button type="submit">add to database</button>
 
      </form>
@@ -53,8 +54,6 @@
              let theTimeNow = new Date()
              data.value = joinDate(theTimeNow, a, '-') 
              document.getElementById("time").value = `${theTimeNow.getHours()}:${ theTimeNow.getMinutes()}`
-             document.getElementById("phone").value = {{phone}}
          </script>
      {% endblock %}
-
 

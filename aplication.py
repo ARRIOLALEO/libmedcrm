@@ -120,21 +120,23 @@ def clients():
     if request.method == "POST":
         with sqlite3.connect(db_path) as con:
             cur = con.cursor()
-            exist_client = cur.execute("SELECT * FROM clients WHERE phone=(?)" ,(request.form.get("phone"),))
+            phone = request.form.get("phone")
+            exist_client = cur.execute("SELECT * FROM clients WHERE phone=(?)" ,(phone,))
             was_found = exist_client.fetchall()
+            get_doctors = cur.execute("SELECT * FROM doctors")
+            all_doctors = get_doctors.fetchall()
+            get_paramedics = cur.execute("SELECT * FROM paramedics")
+            all_paramedics = get_paramedics.fetchall()
+            get_drivers = cur.execute("SELECT * FROM drivers")
+            all_drivers = get_drivers.fetchall()
+            get_dispachers = cur.execute("SELECT * FROM dispachers")
+            all_dispachers = get_dispachers.fetchall()
             if len(was_found) == 0:
-                get_doctors = cur.execute("SELECT * FROM doctors")
-                all_doctors = get_doctors.fetchall()
-                get_paramedics = cur.execute("SELECT * FROM paramedics")
-                all_paramedics = get_paramedics.fetchall()
-                get_drivers = cur.execute("SELECT * FROM drivers")
-                all_drivers = get_drivers.fetchall()
-                get_dispachers = cur.execute("SELECT * FROM dispachers")
-                all_dispachers = get_dispachers.fetchall()
                 return render_template("addcleint.html",
-                        doctors=all_doctors, paramedics=all_paramedics, drivers=all_drivers, dispachers = all_dispachers)
+                        doctors=all_doctors, paramedics=all_paramedics, drivers=all_drivers, dispachers = all_dispachers,phone=phone)
             else:
-                return "customer was found and we can add a new order"
+                print(was_found)
+                return render_template("addclientfound.html",doctors=all_doctors, paramedics=all_paramedics, drivers=all_drivers, dispachers=all_dispachers, client=was_found)
     else:
         return render_template("searchcustomer.html")
 
