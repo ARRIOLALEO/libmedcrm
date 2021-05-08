@@ -5,14 +5,12 @@ import sqlite3
 from flask_session import Session
 from tempfile import mkdtemp
 import os.path
-from flaskwebgui import FlaskUI
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "cmslibmed.db")
 
 app = Flask(__name__)
-ui = FlaskUI(app, width=50, height=500, start_server='flask')
 # here we define our objet bd that help us to conect to the database
 DATABSE  =  'cmslibmed.db'
 def get_db():
@@ -311,9 +309,3 @@ def deletedispacher():
     else:
         return redirect("/dispahcers")
 
-
-
-
-
-if __name__=="__aplication__":
-    ui.run()
