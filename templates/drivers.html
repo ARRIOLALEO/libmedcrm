@@ -1,23 +1,28 @@
 {% extends "layout.html" %}
     {% block main %}
 
-        <table>
-            <tr>
-                <th>
+        <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-200 text-gray-800">
+            <tr class="left border-b-2 boder-gray-300">
+                <th class="px-4 py-3">
                     driver name
                 </th>
-                <th>
+                <th class="px-4 py-3">
                     tel
                 </th>
-                <th>
+                <th class="pax-4 py-3">
                     adress
                 </th>
             </tr>
             {% for driver in drivers%}
-            <tr>
-                <td>{{driver[1]}}</td>
-                <td>{{driver[2]}}</td>
-                <td>{{driver[3]}}</td>
+            <tr class="bg-gray-100  border-b border-gray-200">
+                <td class="px-4 py-3">{{driver[1]}}</td>
+                <td class="px-4 py-3">{{driver[2]}}</td>
+                <td class="px-4 py-3">{{driver[3]}}</td>
+                <td class="px-4 py-3"><form action="/deletedriver" method="post">
+                        <input type="HIDDEN" name="id_delete" value={{driver[0]}}>
+                        <button type="SUBMIT"> X</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </table>

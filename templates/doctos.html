@@ -1,18 +1,22 @@
 {% extends "layout.html"%}
     {% block main %}
-        <table>
-            <tr class="bg-gray-200 text-gray-600 text-xl text-center">
-                <th>Name Doctor</th>
-                <th>Especiality</th>
-                <th>Phone Adress</th>
-                <th>Adress</td>
+        <table  class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-200 text-gray-800">
+            <tr class="left boder-b-2 border-gray-300">
+                <th class="px-4 py-3" >Name Doctor</th>
+                <th class="px-4 py-3">Especiality</th>
+                <th class="px-4 py-3">Phone Adress</th>
+                <th class="px-4 py-3">Adress</td>
             </tr>
             {% for doctor in doctors%}
-            <tr>
-                <td>{{doctor[1]}}</td>
-                <td>{{doctor[2]}}</td>
-                <td>{{doctor[3]}}</td>
-                <td>{{doctor[4]}}</td>
+            <tr class="bg-gray-100 border-b border-gray-200">
+                <td class="px-4 py-3">{{doctor[1]}}</td>
+                <td class="px-4 py-3">{{doctor[2]}}</td>
+                <td class="px-4 py-3">{{doctor[3]}}</td>
+                <td class="px-4 py-3">{{doctor[4]}}</td>
+                <td class="px-4 py-3"><form action="/doctorsdelete" method="post">
+                        <input name="delete_id" type="HIDDEN" value={{doctor[0]}}>
+                        <button type="submit">X</button>
+                    </form>
             </tr>
             {%endfor%}
         </table>

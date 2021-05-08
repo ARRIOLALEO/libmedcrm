@@ -1,16 +1,20 @@
 {% extends "layout.html" %}
 {% block main %}   
-<table>
-        <tr>
-            <th>name </th>
-            <th> phone</th>
-            <th> address</th>
+<table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-200 text-gray-800">
+        <tr class="left border-b-2 border-gray-300">
+            <th class="px-4 py-3">name </th>
+            <th class="px-4 py-4"> phone</th>
+            <th class="px-4 py-4"> address</th>
         </tr>
         {% for dispacher in dispachers %}
-        <tr>
-            <td> {{ dispacher[1] }} </td>
-            <td> {{ dispacher[2] }} </td>
-            <td> {{ dispacher[3] }} </td>
+        <tr class="bg-gray-100 border-b border-gray-200">
+            <td class="px-4 py-3"> {{ dispacher[1] }} </td>
+            <td class="px-4 py-3"> {{ dispacher[2] }} </td>
+            <td class="px-4 py-3"> {{ dispacher[3] }} </td>
+            <td class="px-4 py-3"> <form action="/deletedispacher" method="post">
+                    <input type="HIDDEN" name="id_delete" value={{ dispacher[0]}}>
+                    <button type="SUBMIT" >X </button>
+                </form>
         </tr>
         {% endfor %}
     </table>

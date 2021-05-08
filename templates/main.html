@@ -33,7 +33,11 @@
         <td>{{customer[8]}}</td>
         <td>{{customer[9]}}</td>
         <td>{{customer[19]}} /{{customer[24]}} / {{customer[29]}}</td>
-        <td>{{customer[33]}}
+        <td>{{customer[33]}}</td>
+        <td><form method="post" action="/deletemain">
+                <input type="HIDDEN" name="id_delete"  value ={{customer[0]}}>
+                <button type="submit">x</button>
+            </form>
     </tr>
     {% endfor %}
 </table>

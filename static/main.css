@@ -8,3 +8,15 @@ body{
 .border-b {
     text-align: center;
 }
+.search-container{
+    display:flex;
+    max-width:100vw;
+    max-height:100vh;
+    margin-top:4rem;
+}
+.search-container > form{
+margin:auto;
+}
+body >form {
+    margin:auto;
+}

@@ -5,11 +5,14 @@ import sqlite3
 from flask_session import Session
 from tempfile import mkdtemp
 import os.path
+from flaskwebgui import FlaskUI
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "cmslibmed.db")
 
 app = Flask(__name__)
+ui = FlaskUI(app, width=50, height=500, start_server='flask')
 # here we define our objet bd that help us to conect to the database
 DATABSE  =  'cmslibmed.db'
 def get_db():
@@ -38,11 +41,10 @@ def main():
         cur = conn.cursor()
         all_orders = cur.execute("select * FROM orders  INNER JOIN clients  ON clients.id=orders.id_client INNER JOIN doctors ON orders.doctor=doctors.id INNER JOIN paramedics ON paramedics.id = orders.paramedic INNER JOIN drivers ON drivers.id=orders.driver INNER JOIN dispachers ON dispachers.id=orders.dispacher LIMIT 60")
         customers = all_orders.fetchall()
-        print(customers[0])
         return render_template("main.html",customers=customers)
 
 # we also need to add all the doctos
-@app.route('/doctors', methods=["GET","POST"])
+@app.route('/doctors', methods=["GET","POST","DELETE"])
 @login_require
 def doctors():
     if request.method == "GET":
@@ -135,7 +137,6 @@ def clients():
                 return render_template("addcleint.html",
                         doctors=all_doctors, paramedics=all_paramedics, drivers=all_drivers, dispachers = all_dispachers,phone=phone)
             else:
-                print(was_found)
                 return render_template("addclientfound.html",doctors=all_doctors, paramedics=all_paramedics, drivers=all_drivers, dispachers=all_dispachers, client=was_found)
     else:
         return render_template("searchcustomer.html")
@@ -248,9 +249,71 @@ def addorder():
                 cur.execute("INSERT INTO clients(name, phone, address) VALUES(?, ?, ?)",(name, tel, address,))
                 get_user =  cur.execute("SELECT id FROM clients WHERE phone =(?)",(tel,))
                 the_user = get_user.fetchall()
-                print(date_in)
                 # here i will add to my oders the new oder
                 cur.execute("INSERT INTO orders(datein, timein, timeout, id_client, age, description, diagnost, help, recomendation, doctor, paramedic, driver, dispacher) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",(date_in, time_in, time_out, the_user[0][0], age, information, diagnost, prescription, recomendation, doctor, paramedic, driver, dispacher))
             return redirect("/")
         else:
             return "something is hapening"
+@app.route('/doctorsdelete', methods=["GET","POST"])
+@login_require
+def doctordelete():
+    if request.method == "POST":
+        id_to_delete = request.form.get("delete_id")
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM doctors WHERE id=(?)",(id_to_delete,))
+            return redirect("/doctors")
+    else:
+        return redirect("/doctors")
+
+@app.route('/deletemain', methods=["GET", "POST"])
+@login_require
+def deletemain():
+    if request.method == "POST":
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            to_delete = request.form.get("id_delete")
+            cur.execute("DELETE FROM orders WHERE id=(?)",(to_delete,))
+            return redirect("/")
+    else:
+        return redirect("/")
+
+@app.route('/deletedriver', methods=["GET","POST"])
+@login_require
+def deletedriver():
+    if request.method == "POST":
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM drivers WHERE id=(?)",(request.form.get("id_delete"),))
+            return redirect("drivers")
+    else:
+        return redirect("drivers")
+
+@app.route("/deleteparamedic", methods=["GET", "POST"])
+@login_require
+def deleteparamedic():
+    if request.method == "POST":
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM paramedics WHERE id=(?)",(request.form.get("id_delete"),))
+            return redirect("/paramedics")
+    else:
+        return redirect("/paramedics")
+
+@app.route('/deletedispacher', methods=["GET", "POST"])
+@login_require
+def deletedispacher():
+    if request.method == "POST":
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM dispachers WHERE  id=(?)",(request.form.get("id_delete"),))
+            return redirect("/dispachers")
+    else:
+        return redirect("/dispahcers")
+
+
+
+
+
+if __name__=="__aplication__":
+    ui.run()
