@@ -205,14 +205,20 @@ def dispachers():
         else:
             with sqlite3.connect(db_path) as conn:
                 cur = conn.cursor()
-                exist_dispacher = cur.execute("SELECT * FROM  dispachers WHERE phone=(?)",(dispacher_phone, ))
-                alredy_dispacher = exist_dispacher.fetchall()
-                if not alredy_dispacher:
-                    cur.execute("INSERT INTO dispachers(name, phone, address) VALUES(?, ?, ?)",
-                            (dispacher_name, dispacher_phone, dispacher_address,))
+                is_modify = request.form.get("modi")
+                if is_modify =="1":
+                    id_modify = request.form.get("id")
+                    cur.execute("UPDATE dispachers SET name=(?), phone=(?), address=(?) WHERE id=(?)",(dispacher_name, dispacher_phone, dispacher_address, id_modify, ))
                     return redirect("/dispachers")
                 else:
-                    return "this dispacher is alredy in the data base"
+                    exist_dispacher = cur.execute("SELECT * FROM  dispachers WHERE phone=(?)",(dispacher_phone, ))
+                    alredy_dispacher = exist_dispacher.fetchall()
+                    if not alredy_dispacher:
+                        cur.execute("INSERT INTO dispachers(name, phone, address) VALUES(?, ?, ?)",
+                                (dispacher_name, dispacher_phone, dispacher_address,))
+                        return redirect("/dispachers")
+                    else:
+                        return "this dispacher is alredy in the data base"
 
     else:
         with sqlite3.connect(db_path) as conn:
