@@ -9,24 +9,38 @@
             </tr>
             {% for doctor in doctors%}
             <tr class="bg-gray-100 border-b border-gray-200">
-                <td class="px-4 py-3">{{doctor[1]}}</td>
-                <td class="px-4 py-3">{{doctor[2]}}</td>
-                <td class="px-4 py-3">{{doctor[3]}}</td>
-                <td class="px-4 py-3">{{doctor[4]}}</td>
+                <td class="px-4 py-3" id="name\\{{doctor[0]}}">{{doctor[1]}}</td>
+                <td class="px-4 py-3" id="especialitye\\{{doctor[0]}}">{{doctor[2]}}</td>
+                <td class="px-4 py-3" id="phone\\{{doctor[0]}}">{{doctor[3]}}</td>
+                <td class="px-4 py-3" id="address\\{{doctor[0]}}">{{doctor[4]}}</td>
                 <td class="px-4 py-3"><form action="/doctorsdelete" method="post">
                         <input name="delete_id" type="HIDDEN" value={{doctor[0]}}>
                         <button type="submit">X</button>
                     </form>
+                    <button id="modify" onclick="modify({{ doctor[0] }})"> Modi<button>
             </tr>
             {%endfor%}
         </table>
 <div class="w-full ">
         <form action="/doctors" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <input type="text" name="name" placeholder="Doctor name">
-            <input type="text" name="especiality" placeholder="Especiality">
-            <input type="text" name="phone" placeholder="phone">
-            <input type="text" name="address" placeholder="adress">
-            <button type="submit"class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >add a doctor </button>
+            <input type="text" name="name" id="name-form" placeholder="Doctor name">
+            <input type="text" name="especiality"id="especiality-form" placeholder="Especiality">
+            <input type="text" name="phone" id="phone-form" placeholder="phone">
+            <input type="text" name="address" id="address-form" placeholder="adress">
+            <input type="hidden" name="id" id="id-form" value="">
+            <input type="hidden" name="modi" id="modification-form" value=0>
+            <button type="submit"id="btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >add a doctor </button>
         </form>
 </div>
-    {% endblock %}
+      <script>
+          function modify(e){
+              document.getElementById("name-form").value = document.getElementById(`name\\\\${e}`).innerHTML
+              document.getElementById("especiality-form").value = document.getElementById(`especialitye\\\\${e}`).innerHTML
+              document.getElementById("phone-form").value = document.getElementById(`phone\\\\${e}`).innerHTML
+              document.getElementById("address-form").value = document.getElementById(`address\\\\${e}`).innerHTML
+              document.getElementById("modification-form").value = 1
+              document.getElementById("id-form").value = e
+              document.getElementById("btn").innerHTML =" modify"
+          }
+      </script>
+      {% endblock %}

@@ -61,14 +61,21 @@ def doctors():
         else:
             with sqlite3.connect("cmslibmed.db") as conn:
                 cur = conn.cursor()
-                doctor_exist = cur.execute("SELECT * FROM doctors WHERE phone=(?)",(doctor_phone,))
-                there_is_doctor = doctor_exist.fetchall()
-                if not there_is_doctor:
-                    cur.execute("INSERT INTO doctors(name, especiality, phone, adress) VALUES(?, ?, ? ,?)",
-                            (doctor_name, doctor_espc, doctor_phone, doctor_address))
+                is_update = request.form.get("modi")
+                if is_update == "1":
+                    doctor_id = request.form.get("id")
+                    cur.execute("UPDATE doctors SET name=(?), especiality=(?), phone=(?), adress=(?) WHERE id=(?)",
+                            (doctor_name, doctor_espc, doctor_phone, doctor_address, doctor_id,))
                     return redirect("/doctors")
                 else:
-                    return "the doctor alredy exist on the data base the same phone"
+                    doctor_exist = cur.execute("SELECT * FROM doctors WHERE phone=(?)",(doctor_phone,))
+                    there_is_doctor = doctor_exist.fetchall()
+                    if not there_is_doctor:
+                        cur.execute("INSERT INTO doctors(name, especiality, phone, adress) VALUES(?, ?, ? ,?)",
+                                (doctor_name, doctor_espc, doctor_phone, doctor_address))
+                        return redirect("/doctors")
+                    else:
+                        return "the doctor alredy exist on the data base the same phone"
 
 
 
@@ -179,13 +186,19 @@ def drivers():
         else:
             with sqlite3.connect(db_path) as conn:
                 cur = conn.cursor()
-                exist_driver = cur.execute("SELECT * FROM drivers WHERE phone=(?)",(driver_phone,))
-                alredy_driver_in_db = exist_driver.fetchall()
-                if not alredy_driver_in_db:
-                    cur.execute("INSERT INTO drivers(name, phone, adress) VALUES(?, ?, ?)",(driver_name, driver_phone, driver_address ,))
+                is_modi = request.form.get("mody")
+                if is_modi == "1":
+                    cur.execute("UPDATE drivers SET name=(?), phone=(?), adress=(?) WHERE id=(?)",(driver_name, driver_phone, driver_address, request.form.get("id"),))
                     return redirect("/drivers")
                 else:
-                    return "the driver alredy exist in the db"
+                    exist_driver = cur.execute("SELECT * FROM drivers WHERE phone=(?)",(driver_phone,))
+                    alredy_driver_in_db = exist_driver.fetchall()
+                    if not alredy_driver_in_db:
+                        cur.execute("INSERT INTO drivers(name, phone, adress) VALUES(?, ?, ?)",
+                                (driver_name, driver_phone, driver_address ,))
+                        return redirect("/drivers")
+                    else:
+                        return "the driver alredy exist in the db"
     else:
         with sqlite3.connect(db_path) as conn:
             cur = conn.cursor()
