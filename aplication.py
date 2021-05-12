@@ -159,14 +159,21 @@ def paramedics():
         else:
             with sqlite3.connect(db_path) as conn:
                 cur = conn.cursor()
-                exist_paramedic = cur.execute("SELECT * FROM paramedics WHERE phone=(?)", (doctor_phone,))
-                alredy_in_db = exist_paramedic.fetchall()
-                if not alredy_in_db:
-                    cur.execute("INSERT INTO paramedics(name, especiality, phone, address) VALUES(?, ?, ?, ?)",
-                            (doctor_name, doctor_spc, doctor_phone, doctor_address, ))
-                    return redirect("/paramedics") 
+                is_update = request.form.get("mody")
+                if is_update == "1":
+                    doctor_id = request.form.get("id")
+                    cur.execute("UPDATE paramedics SET name=(?), especiality=(?), phone=(?), address=(?) WHERE id=(?)",
+                            (doctor_name, doctor_spc, doctor_phone, doctor_address, doctor_id,))
+                    return redirect("/paramedics")
                 else:
-                    return  "somthing is happening here"
+                    exist_paramedic = cur.execute("SELECT * FROM paramedics WHERE phone=(?)", (doctor_phone,))
+                    alredy_in_db = exist_paramedic.fetchall()
+                    if not alredy_in_db:
+                        cur.execute("INSERT INTO paramedics(name, especiality, phone, address) VALUES(?, ?, ?, ?)",
+                                (doctor_name, doctor_spc, doctor_phone, doctor_address, ))
+                        return redirect("/paramedics") 
+                    else:
+                        return  "somthing is happening here"
     else:
         with sqlite3.connect(db_path) as conn:
             cur = conn.cursor()

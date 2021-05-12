@@ -18,7 +18,7 @@
                     <input name="id_delete" type="HIDDEN" value={{ paramedic[0] }}>
                     <button type="submit"> X </button>
                 </form>
-                <button id="btn" onclick="modify({{paramedic[0]}})"/> mod</button>
+                <button  onclick="modify({{paramedic[0]}})"/> mod</button>
             </td>
 
         </tr>
@@ -32,7 +32,7 @@
         <input type="text" name="address" id="address-form" placeholder="address">
         <input type="hidden" name="id" id="id" value="">
         <input type="hidden" name="mody" id="mody" value=0 >
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shad    ow-outline"> add paramedic </button>
+        <button type="submit" id="btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shad    ow-outline"> add paramedic </button>
         </form>
     <script>
         function modify(e){
@@ -40,6 +40,9 @@
             document.getElementById("especiality-form").value = document.getElementById(`especialitye\\\\${e}`).innerHTML
             document.getElementById("phone-form").value = document.getElementById(`phone\\\\${e}`).innerHTML
             document.getElementById("address-form").value = document.getElementById(`address\\\\${e}`).innerHTML
+            document.getElementById("mody").value = 1
+            document.getElementById("id").value = e
+            document.getElementById("btn").innerHTML= "modification"
         }
     </script>
 
