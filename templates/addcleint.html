@@ -1,39 +1,39 @@
 {% extends "layout.html" %}
     {% block main %}
-    <form action="/addorder" method="post">
-     <input type="TEXT"  name="data" id="data">
-     <input type="TEXT" name="time"  id="time">
-     <input type="TIME" placeholder="ВРЕМЯ ОТЗВАНИВАНИЕ ВЫЗОВА" name="time2" required>
-     <input type="text" placeholder="Ф.И.О" name="name">
-     <input type="text" placeholder="ВОЗРАСТ" name="age">
-     <input type="text" placeholder="АДРЕС ВЫЗОВА" name="address">
-     <input type="TEL" placeholder="ТЕЛ-Н" name="tel" id="phone">
-     <textarea row="10" col="45" name="information" placeholder="ПОВОД"></textarea>
-     <textarea row="10" col="45" name="diagnost" placeholder="ДИОГНОЗ"></textarea>
-     <textarea row="10" col="45" name="prescription" placeholder="ОКАЗАНИЕ ПОМОЩИ."></textarea>
-     <textarea row="10" col="45"name="exodo" placeholder="ИСХОД"></textarea>
-     <select name="doctor">
+    <form action="/addorder" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+     <input type="TEXT"  name="data" class="shadow appearance-none border rounded py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  id="data">
+     <input type="TEXT"name="time"  class="shadow appearance-none border rounded py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="time">
+     <input type="TIME" class="shadow appearance-none border rounded py-4 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  placeholder="ВРЕМЯ ОТЗВАНИВАНИЕ ВЫЗОВА" name="time2" required>
+     <input type="text" class="shadow appearance-none border rounded py-4 px-16 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ф.И.О" name="name">
+     <input type="text" class="shadow appearance-none border rounded py-4 px-11 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  placeholder="ВОЗРАСТ" name="age">
+     <input type="text" class="shadow appearance-none border rounded py-4 px-16 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="АДРЕС ВЫЗОВА" name="address">
+     <input type="TEL" class="shadow appearance-none border rounded py-4 px-16 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="ТЕЛ-Н" name="tel" id="phone">
+     <textarea row="10" col="45" class="shadow appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"name="information" placeholder="ПОВОД"></textarea>
+     <textarea row="10" col="45" name="diagnost" class="shadow appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"placeholder="ДИОГНОЗ"></textarea>
+     <textarea row="10" col="45" class="shadow appearance-none border rounded py-4 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"name="prescription" placeholder="ОКАЗАНИЕ ПОМОЩИ."></textarea>
+     <textarea row="10" col="45"name="exodo" class="shadow appearance-none border rounded py-4 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"placeholder="ИСХОД"></textarea>
+     <select name="doctor" class="shadow w-1/6 appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"> 
         {% for doctor in doctors %}
             <option value={{doctor[0]}}> {{doctor[1]}} </option>
         {% endfor %}
      </select>
-     <select name="paramedic">
+     <select name="paramedic" class="shadow w-1/6 appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         {%for paramedic in paramedics %}
             <option value={{paramedic[0]}}>{{paramedic[1]}}<option>
         {% endfor %}
      </select>
-     <select name="driver" >
+     <select name="driver" class="shadow w-1/6  appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
          {% for driver in drivers %}
             <option value={{ driver[0]}}>{{driver[1]}}</option>
          {% endfor %}
      </select>
-     <select name="dispacher">
+     <select name="dispacher"class="shadow w-1/4 appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
         {%for dispacher in dispachers %}
             <option value={{dispacher[0]}}> {{dispacher[1]}}</option>
         {% endfor %}
      </select>
      <input type="HIDDEN" value="1" name="type">
-     <button type="submit">add to database</button>
+     <button type="submit" class="bg-blue-500 w-1/8  hover:bg-blue-700 text-white font-bold py-4 px-6">add to database</button>
 
      </form>
      
