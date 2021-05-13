@@ -33,7 +33,7 @@
         {% endfor %}
      </select>
      <input type="HIDDEN" value="2" name="type">
-     <input type="HIDDEN" value={{client[0][0]}} name="client_id">
+     <input type="HIDDEN" value={{client[0][0]}} name="clientid">
      <button type="submit" class="bg-blue-500 w-1/8 hover:bg-blue-700 text-white font-bold py-4 px-6" >add to database</button>
 
      </form>
@@ -55,5 +55,47 @@
              data.value = joinDate(theTimeNow, a, '-') 
              document.getElementById("time").value = `${theTimeNow.getHours()}:${ theTimeNow.getMinutes()}`
          </script>
+
+         <table class="w-screen text-xs">
+    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <td class="py-3 px-2 text-xs text-center">№</td>
+        <td class="py-3 px-2 text-xs text-center">Дата</td>
+        <td class="py-3 px-2 text-xs text-center">Время поступление вызова</td>
+        <td class="py-3 px-2 text-xs text-center">Время отзванивание вызова</td>
+        <td class="py-3 px-2 text-xs text-center">Ф.И.О</td>
+        <td class="py-3 px-2 text-xs text-center">Возраст</td>
+        <td class="py-3 px-2 text-xs text-center">Адрес вызова</td>
+        <td class="py-3 px-2 text-xs text-center">Тел-н</td>
+        <td class="py-3 px-2 text-xs text-center">Повод</td>
+        <td class="py-3 px-2 text-xs text-center">Диогноз</td>
+        <td class="py-3 px-2 text-xs text-center">Оказание помощи.</td>
+        <td class="py-3 px-2 text-xs text-center">Исход</td>
+        <td class="py-3 px-2 text-xs text-center">Врач, фельдшер, водител</td>
+        <td class="py-3 px-2 text-xs text-center">Диспетчер</td>
+    </tr>
+    {%for customer in customers %}
+    <tr class="border-b border-gray-200 hover:bg-gray-100">
+        <td>{{customer[0]}}</td>
+        <td>{{customer[1]}}</td>
+        <td>{{customer[2]}}</td>
+        <td>{{customer[3]}}</td>
+        <td>{{customer[15]}}</td>
+        <td>{{customer[5]}}</td>
+        <td>{{customer[17]}}</td>
+        <td>{{customer[16]}}</td>
+        <td>{{customer[6]}}</td>
+        <td>{{customer[7]}}</td>
+        <td>{{customer[8]}}</td>
+        <td>{{customer[9]}}</td>
+        <td>{{customer[19]}} /{{customer[24]}} / {{customer[29]}}</td>
+        <td>{{customer[33]}}</td>
+        <td><form method="post" action="/deletemain">
+                <input type="HIDDEN" name="id_delete"  value ={{customer[0]}}>
+                <button type="submit">x</button>
+            </form>
+    </tr>
+    {% endfor %}
+</table>
+
      {% endblock %}
 

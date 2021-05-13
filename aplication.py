@@ -142,7 +142,8 @@ def clients():
                 return render_template("addcleint.html",
                         doctors=all_doctors, paramedics=all_paramedics, drivers=all_drivers, dispachers = all_dispachers,phone=phone)
             else:
-                return render_template("addclientfound.html",doctors=all_doctors, paramedics=all_paramedics, drivers=all_drivers, dispachers=all_dispachers, client=was_found)
+                all_orders = cur.execute("select * FROM orders  INNER JOIN clients  ON clients.id=orders.id_client INNER JOIN doctors ON orders.doctor=doctors.id INNER JOIN paramedics ON paramedics.id = orders.paramedic INNER JOIN drivers ON drivers.id=orders.driver INNER JOIN dispachers ON dispachers.id=orders.dispacher WHERE clients.id=(?)",(was_found[0][0],))
+                return render_template("addclientfound.html",doctors=all_doctors, paramedics=all_paramedics, drivers=all_drivers, dispachers=all_dispachers, client=was_found,customers=all_orders)
     else:
         return render_template("searchcustomer.html")
 
@@ -277,7 +278,13 @@ def addorder():
                 cur.execute("INSERT INTO orders(datein, timein, timeout, id_client, age, description, diagnost, help, recomendation, doctor, paramedic, driver, dispacher) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",(date_in, time_in, time_out, the_user[0][0], age, information, diagnost, prescription, recomendation, doctor, paramedic, driver, dispacher))
             return redirect("/")
         else:
-            return "something is hapening"
+            with sqlite3.connect(db_path) as conn:
+                cur = conn.cursor()
+                client_id = request.form.get("clientid")
+                cur.execute("INSERT INTO orders(datein, timein, timeout, id_client, age, description, diagnost, help, recomendation, doctor, paramedic, driver, dispacher) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",(date_in, time_in, time_out,client_id, age, information, diagnost, prescription, recomendation, doctor, paramedic, driver, dispacher))
+            return redirect("/")
+
+
 @app.route('/doctorsdelete', methods=["GET","POST"])
 @login_require
 def doctordelete():
