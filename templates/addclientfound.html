@@ -3,38 +3,38 @@
     <form action="/addorder" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
      <input type="TEXT"  name="data" id="data" class="shadow appearance-none border rounded py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
      <input type="TEXT" name="time"  id="time" class="shadow appearance-none border rounded py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
-     <input type="TIME" placeholder="ВРЕМЯ ОТЗВАНИВАНИЕ ВЫЗОВА" name="time2"  class="shadow appearance-none border rounded py-4 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+     <input type="TIME" placeholder="ВРЕМЯ ОТЗВАНИВАНИЕ ВЫЗОВА" id="time2" name="time2"  class="shadow appearance-none border rounded py-4 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
      <input type="text" placeholder="Ф.И.О" value={{client[0][1]}} name="name" disabled  class="shadow appearance-none border rounded py-4 px-16 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
-     <input type="text" placeholder="ВОЗРАСТ" name="age" class="shadow appearance-none border rounded py-4 px-11 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
-     <input type="text" placeholder="АДРЕС ВЫЗОВА" name="address" value={{client[0][3]}}  class="shadow appearance-none border rounded py-4 px-16 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" disabled>
+     <input type="text" placeholder="ВОЗРАСТ"  id="age" name="age" class="shadow appearance-none border rounded py-4 px-11 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+     <input type="text" placeholder="АДРЕС ВЫЗОВА" name="address" id="age" value={{client[0][3]}}  class="shadow appearance-none border rounded py-4 px-16 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" disabled>
      <input type="TEL" placeholder="ТЕЛ-Н" name="tel" id="phone" value={{client[0][2]}}  class="shadow appearance-none border rounded py-4 px-16 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" disabled>
-     <textarea row="10" col="45" name="information" placeholder="ПОВОД" class="shadow appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" ></textarea>
-     <textarea row="10" col="45" name="diagnost" placeholder="ДИОГНОЗ" class="shadow appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" ></textarea>
-     <textarea row="10" col="45" name="prescription" placeholder="ОКАЗАНИЕ ПОМОЩИ." class="shadow appearance-none border rounded py-4 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" ></textarea>
-     <textarea row="10" col="45"name="exodo" placeholder="ИСХОД" class="shadow appearance-none border rounded py-4 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" ></textarea>
-     <select name="doctor" class="shadow appearance-none border rounded py-4 px-8 w-1/6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+     <textarea row="10" col="45" name="information"id="information" placeholder="ПОВОД" class="shadow appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" ></textarea>
+     <textarea row="10" col="45" name="diagnost" id="diagnost"  placeholder="ДИОГНОЗ" class="shadow appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" ></textarea>
+     <textarea row="10" col="45" name="prescription" id="prescription" placeholder="ОКАЗАНИЕ ПОМОЩИ." class="shadow appearance-none border rounded py-4 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" ></textarea>
+     <textarea row="10" col="45"name="exodo" id="exodo" placeholder="ИСХОД" class="shadow appearance-none border rounded py-4 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" ></textarea>
+     <select name="doctor" id="doctorselect" class="shadow appearance-none border rounded py-4 px-8 w-1/6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
         {% for doctor in doctors %}
             <option value={{doctor[0]}}> {{doctor[1]}} </option>
         {% endfor %}
      </select>
-     <select name="paramedic" class="shadow appearance-none border rounded py-4 px-8 w-1/6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+     <select name="paramedic" id="paramedicselect" class="shadow appearance-none border rounded py-4 px-8 w-1/6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
         {%for paramedic in paramedics %}
             <option value={{paramedic[0]}}>{{paramedic[1]}}<option>
         {% endfor %}
      </select>
-     <select name="driver"  class="w-1/6 shadow appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+     <select name="driver" id="driverselect"  class="w-1/6 shadow appearance-none border rounded py-4 px-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
          {% for driver in drivers %}
             <option value={{ driver[0]}}>{{driver[1]}}</option>
          {% endfor %}
      </select>
-     <select name="dispacher" class="shadow appearance-none border rounded py-4 px-8 w-1/4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+     <select name="dispacher" id="dispacherselect"  class="shadow appearance-none border rounded py-4 px-8 w-1/4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
         {%for dispacher in dispachers %}
             <option value={{dispacher[0]}}> {{dispacher[1]}}</option>
         {% endfor %}
      </select>
      <input type="HIDDEN" value="2" name="type">
      <input type="HIDDEN" value={{client[0][0]}} name="clientid">
-     <button type="submit" class="bg-blue-500 w-1/8 hover:bg-blue-700 text-white font-bold py-4 px-6" >add to database</button>
+     <button id="btn" type="submit" class="bg-blue-500 w-1/8 hover:bg-blue-700 text-white font-bold py-4 px-6" >add to database</button>
 
      </form>
      
@@ -58,44 +58,67 @@
 
          <table class="w-screen text-xs">
     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-        <td class="py-3 px-2 text-xs text-center">№</td>
-        <td class="py-3 px-2 text-xs text-center">Дата</td>
-        <td class="py-3 px-2 text-xs text-center">Время поступление вызова</td>
-        <td class="py-3 px-2 text-xs text-center">Время отзванивание вызова</td>
-        <td class="py-3 px-2 text-xs text-center">Ф.И.О</td>
-        <td class="py-3 px-2 text-xs text-center">Возраст</td>
-        <td class="py-3 px-2 text-xs text-center">Адрес вызова</td>
-        <td class="py-3 px-2 text-xs text-center">Тел-н</td>
-        <td class="py-3 px-2 text-xs text-center">Повод</td>
-        <td class="py-3 px-2 text-xs text-center">Диогноз</td>
-        <td class="py-3 px-2 text-xs text-center">Оказание помощи.</td>
-        <td class="py-3 px-2 text-xs text-center">Исход</td>
-        <td class="py-3 px-2 text-xs text-center">Врач, фельдшер, водител</td>
-        <td class="py-3 px-2 text-xs text-center">Диспетчер</td>
+        <td class="py-2 px-2 text-xs text-center">№</td>
+        <td class="py-2 px-2 text-xs text-center">Дата</td>
+        <td class="py-2 px-2 text-xs text-center">Время<br/> поступление вызова</td>
+        <td class="py-2 px-2 text-xs text-center">Время<br/> отзванивание вызова</td>
+        <td class="py-2 px-2 text-xs text-center">Ф.И.О</td>
+        <td class="py-2 px-2 text-xs text-center">Возраст</td>
+        <td class="py-2 px-2 text-xs text-center">Адрес вызова</td>
+        <td class="py-2 px-2 text-xs text-center">Тел-н</td>
+        <td class="py-2 px-2 text-xs text-center">Повод</td>
+        <td class="py-2 px-2 text-xs text-center">Диогноз</td>
+        <td class="py-2 px-2 text-xs text-center">Оказание помощи.</td>
+        <td class="py-2 px-2 text-xs text-center">Исход</td>
+        <td class="py-2 px-2 text-xs text-center">Врач, фельдшер, водител</td>
+        <td class="py-2 px-2 text-xs text-center">Диспетчер</td>
     </tr>
     {%for customer in customers %}
     <tr class="border-b border-gray-200 hover:bg-gray-100">
-        <td>{{customer[0]}}</td>
-        <td>{{customer[1]}}</td>
-        <td>{{customer[2]}}</td>
-        <td>{{customer[3]}}</td>
+        <td id="order\\{{customer[0]}}">{{customer[0]}}</td>
+        <td id="data\\{{customer[0]}}">{{customer[1]}}</td>
+        <td id="timein\\{{customer[0]}}">{{customer[2]}}</td>
+        <td id="timeout\\{{customer[0]}}">{{customer[3]}}</td>
         <td>{{customer[15]}}</td>
-        <td>{{customer[5]}}</td>
+        <td id="age\\{{customer[0]}}" >{{customer[5]}}</td>
         <td>{{customer[17]}}</td>
         <td>{{customer[16]}}</td>
-        <td>{{customer[6]}}</td>
-        <td>{{customer[7]}}</td>
-        <td>{{customer[8]}}</td>
-        <td>{{customer[9]}}</td>
-        <td>{{customer[19]}} /{{customer[24]}} / {{customer[29]}}</td>
+        <td id="description\\{{customer[0]}}">{{customer[6]}}</td>
+        <td id="diagnost\\{{customer[0]}}">{{customer[7]}}</td>
+        <td id="help\\{{customer[0]}}">{{customer[8]}}</td>
+        <td id="recomendation\\{{customer[0]}}">{{customer[9]}}</td>
+        <td>{{customer[19]}} /<br/>{{customer[24]}} /<br/> {{customer[29]}}</td>
         <td>{{customer[33]}}</td>
+        <input type="hidden" id="idclient\\{{customer[0]}}" value={{customer[4]}}>
+        <input type="hidden" id="iddoctor\\{{customer[0]}}" value={{customer[10]}}>
+        <input type="hidden" id="idparamedic\\{{customer[0]}}" value={{customer[11]}}>
+        <input type="hidden" id="iddriver\\{{customer[0]}}" value={{customer[12]}}>
+        <input type="hidden" id="iddispacher\\{{customer[0]}}" value={{customer[13]}}>
         <td><form method="post" action="/deletemain">
                 <input type="HIDDEN" name="id_delete"  value ={{customer[0]}}>
                 <button type="submit">x</button>
             </form>
+        <td><button onclick="mody({{customer[0]}})">mody</td>
     </tr>
     {% endfor %}
 </table>
+         <script>
+             function mody(e){
+                 document.getElementById("btn").innerHTML = "modify"
+                 document.getElementById("data").value = document.getElementById(`data\\\\${e}`).innerHTML
+                 document.getElementById("time").value = document.getElementById(`timein\\\\${e}`).innerHTML
+                 document.getElementById("time2").value = document.getElementById(`timeout\\\\${e}`).innerHTML
+                 document.getElementById("age").value = document.getElementById(`age\\\\${e}`).innerHTML
+                 document.getElementById("information").value = document.getElementById(`description\\\\${e}`).innerHTML
+                 document.getElementById("diagnost").value = document.getElementById(`diagnost\\\\${e}`).innerHTML
+                 document.getElementById("prescription").value = document.getElementById(`help\\\\${e}`).innerHTML
+                 document.getElementById("exodo").value = document.getElementById(`recomendation\\\\${e}`).innerHTML
+                 document.getElementById("doctorselect").value = document.getElementById(`iddoctor\\\\${e}`).value
+                 document.getElementById("paramedicselect").value = document.getElementById(`idparamedic\\\\${e}`).value
+                 document.getElementById("dispacherselect").value = document.getElementById(`iddispacher\\\\${e}`).value
+                 document.getElementById("driverselect").value = document.getElementById(`iddriver\\\\${e}`).value
+             }
 
+         </script>
      {% endblock %}
 
