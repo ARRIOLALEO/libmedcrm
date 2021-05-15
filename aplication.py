@@ -277,13 +277,18 @@ def addorder():
                 # here i will add to my oders the new oder
                 cur.execute("INSERT INTO orders(datein, timein, timeout, id_client, age, description, diagnost, help, recomendation, doctor, paramedic, driver, dispacher) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",(date_in, time_in, time_out, the_user[0][0], age, information, diagnost, prescription, recomendation, doctor, paramedic, driver, dispacher))
             return redirect("/")
-        else:
+        elif customer_type == "2":
             with sqlite3.connect(db_path) as conn:
                 cur = conn.cursor()
                 client_id = request.form.get("clientid")
                 cur.execute("INSERT INTO orders(datein, timein, timeout, id_client, age, description, diagnost, help, recomendation, doctor, paramedic, driver, dispacher) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",(date_in, time_in, time_out,client_id, age, information, diagnost, prescription, recomendation, doctor, paramedic, driver, dispacher))
             return redirect("/")
-
+        else:
+            with sqlite3.connect(db_path) as conn:
+                cur = conn.cursor()
+                order_number = request.form.get("orderid")
+                cur.execute("UPDATE orders SET timeout=(?), age=(?), description=(?),diagnost=(?), help=(?), recomendation=(?), doctor=(?), paramedic=(?), driver=(?), dispacher=(?) WHERE id=(?)",(time_out, age, information, diagnost, prescription,recomendation ,doctor, paramedic,driver,dispacher,order_number))
+                return redirect("/",)
 
 @app.route('/doctorsdelete', methods=["GET","POST"])
 @login_require

@@ -32,7 +32,8 @@
             <option value={{dispacher[0]}}> {{dispacher[1]}}</option>
         {% endfor %}
      </select>
-     <input type="HIDDEN" value="2" name="type">
+     <input type="HIDDEN" id="type" value="2" name="type">
+     <input type="HIDDEN" id="orderid" value="" name="orderid">
      <input type="HIDDEN" value={{client[0][0]}} name="clientid">
      <button id="btn" type="submit" class="bg-blue-500 w-1/8 hover:bg-blue-700 text-white font-bold py-4 px-6" >add to database</button>
 
@@ -117,6 +118,8 @@
                  document.getElementById("paramedicselect").value = document.getElementById(`idparamedic\\\\${e}`).value
                  document.getElementById("dispacherselect").value = document.getElementById(`iddispacher\\\\${e}`).value
                  document.getElementById("driverselect").value = document.getElementById(`iddriver\\\\${e}`).value
+                 document.getElementById("type").value = 3
+                 document.getElementById("orderid").value = document.getElementById(`order\\\\${e}`).innerHTML
              }
 
          </script>
