@@ -15,9 +15,9 @@
                 <td class="px-4 py-3" id="address\\{{doctor[0]}}">{{doctor[4]}}</td>
                 <td class="px-4 py-3"><form action="/doctorsdelete" method="post">
                         <input name="delete_id" type="HIDDEN" value={{doctor[0]}}>
-                        <button type="submit">X</button>
+                        <button type="submit" class="bg-red-500 text-gray-200 rounded hover:bg-red-400 px-6 py-2 focus:outline-none mx-1">X</button>
                     </form>
-                    <button id="modify" onclick="modify({{ doctor[0] }})">МЕНЯТЬ<button>
+                    <button  class="bg-green-500 text-gray-200 rounded hover:bg-green-400 px-6 py-2 focus:outline-none mx-1"id="modify" onclick="modify({{ doctor[0] }})">М<button>
             </tr>
             {%endfor%}
         </table>
@@ -40,7 +40,7 @@
               document.getElementById("address-form").value = document.getElementById(`address\\\\${e}`).innerHTML
               document.getElementById("modification-form").value = 1
               document.getElementById("id-form").value = e
-              document.getElementById("btn").innerHTML ="МЕНЯТЬ"
+              document.getElementById("btn").innerHTML ="ИЗМЕНИТЬ"
           }
       </script>
       {% endblock %}

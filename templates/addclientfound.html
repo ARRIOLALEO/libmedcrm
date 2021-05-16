@@ -35,7 +35,7 @@
      <input type="HIDDEN" id="type" value="2" name="type">
      <input type="HIDDEN" id="orderid" value="" name="orderid">
      <input type="HIDDEN" value={{client[0][0]}} name="clientid">
-     <button id="btn" type="submit" class="bg-blue-500 w-1/8 hover:bg-blue-700 text-white font-bold py-4 px-6" >add to database</button>
+     <button id="btn" type="submit" class="bg-blue-500 w-1/8 hover:bg-blue-700 text-white font-bold py-4 px-6" >ДОБАВЛЯТЬ</button>
 
      </form>
      
@@ -97,15 +97,15 @@
         <input type="hidden" id="iddispacher\\{{customer[0]}}" value={{customer[13]}}>
         <td><form method="post" action="/deletemain">
                 <input type="HIDDEN" name="id_delete"  value ={{customer[0]}}>
-                <button type="submit">x</button>
+                <button class="bg-red-500 text-gray-200 rounded hover:bg-red-400 px-6 py-2 focus:outline-none mx-1" type="submit">x</button>
             </form>
-        <td><button onclick="mody({{customer[0]}})">mody</td>
+        <td><button onclick="mody({{customer[0]}})" class="bg-green-500 text-gray-200 rounded hover:bg-green-400 px-6 py-2 focus:outline-none mx-1">М</td>
     </tr>
     {% endfor %}
 </table>
          <script>
              function mody(e){
-                 document.getElementById("btn").innerHTML = "modify"
+                 document.getElementById("btn").innerHTML = "ИЗМЕНИТЬ"
                  document.getElementById("data").value = document.getElementById(`data\\\\${e}`).innerHTML
                  document.getElementById("time").value = document.getElementById(`timein\\\\${e}`).innerHTML
                  document.getElementById("time2").value = document.getElementById(`timeout\\\\${e}`).innerHTML

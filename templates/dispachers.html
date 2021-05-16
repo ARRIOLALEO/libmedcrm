@@ -2,9 +2,9 @@
 {% block main %}   
 <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-200 text-gray-800">
         <tr class="left border-b-2 border-gray-300">
-            <th class="px-4 py-3">name </th>
-            <th class="px-4 py-4"> phone</th>
-            <th class="px-4 py-4"> address</th>
+            <th class="px-4 py-3">ИМЯ </th>
+            <th class="px-4 py-3">ТЕЛЕФОН</th>
+             <th class="px-4 py-3">АДРЕС</td>
         </tr>
         {% for dispacher in dispachers %}
         <tr class="bg-gray-100 border-b border-gray-200" >
@@ -13,19 +13,19 @@
             <td class="px-4 py-3" id="address\\{{dispacher[0]}}"> {{ dispacher[3] }} </td>
             <td class="px-4 py-3"> <form action="/deletedispacher" method="post">
                     <input type="HIDDEN" name="id_delete" value={{ dispacher[0]}}>
-                    <button type="SUBMIT" >X </button>
+                    <button class="bg-red-500 text-gray-200 rounded hover:bg-red-400 px-6 py-2 focus:outline-none mx-1" type="SUBMIT" >X </button>
                 </form>
-                <button id="modify" onclick="modify({{ dispacher[0] }})"> Modi<button>
+                <button id="modify" class="bg-green-500 text-gray-200 rounded hover:bg-green-400 px-6 py-2 focus:outline-none mx-1"onclick="modify({{ dispacher[0] }})"> М<button>
         </tr>
         {% endfor %}
     </table>
     <form action="/dispachers" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <input type="text" name="name" id="name-form"  placeholder="name">
-            <input type="text" name="phone"id="phone-form" placeholder="phone">
-            <input type="text" name="address" id="address-form" placeholder="address">
+            <input type="text" name="name" id="name-form"  placeholder="ИМЯ">
+            <input type="text" name="phone"id="phone-form" placeholder="ТЕЛЕФО">
+            <input type="text" name="address" id="address-form" placeholder="АДРЕС">
             <input type="hidden" name="id" id="id-form" value="">
             <input type="hidden" name="modi" id="modification-form" value=0>
-            <button type="submit" id="btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded focur:outline-none focus:shadow-outline"> add a dipacher </button>
+            <button type="submit" id="btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded focur:outline-none focus:shadow-outline"> ДОБАВИТЬ  ДИСПЕТЧЕР</button>
     </form>
      <script>
          function modify(e){
@@ -34,7 +34,7 @@
              document.getElementById("address-form").value = document.getElementById(`address\\\\${e}`).innerHTML
              document.getElementById("id-form").value = e
              document.getElementById("modification-form").value =1
-             document.getElementById("btn").innerHTML = "modificate"
+             document.getElementById("btn").innerHTML = "ИЗМЕНИТЬ"
          }
      </script>
  {% endblock %}

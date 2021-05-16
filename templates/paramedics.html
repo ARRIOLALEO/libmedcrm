@@ -3,22 +3,22 @@
 {% block main %}
     <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-200 text-gray-800"> 
         <tr class="left border-b-2 border-gray-30">
-            <th class="px-4 py-3">Name</th>
-            <th class="px-4 py-3">especiality </th>
-            <th class="px-4 py-3">phone </th>
-            <th class="px-4 py-3"> address</th>
+            <th class="px-4 py-3">ИМЯ ФЕЛЬДШЕРА</th>
+            <th class="px-4 py-3">СПЕЦИАЛЬНОСТЬ</th>
+            <th class="px-4 py-3">ТЕЛЕФОН</th>
+            <th class="px-4 py-3">АДРЕС</td>
         </tr>
         {% for paramedic in paramedics %}
         <tr class="bg-gray-100 border-b border-gray-200">    
             <td class="px-4 py-3" id="name\\{{paramedic[0]}}">{{paramedic[1]}}</td>
             <td class="px-4 py-3" id="especialitye\\{{paramedic[0]}}">{{paramedic[2]}}</td>
-            <td class="px-4 py-3" id="phone\\{{paramedic[0]}}"{{paramedic[3]}}</td>
+            <td class="px-4 py-3" id="phone\\{{paramedic[0]}}">{{paramedic[3]}}</td>
             <td class="px-4 py-3" id="address\\{{paramedic[0]}}">{{paramedic[4]}}</td>
             <td class="px-4 py-3"> <form action="/deleteparamedic" method="post">
                     <input name="id_delete" type="HIDDEN" value={{ paramedic[0] }}>
-                    <button type="submit"> X </button>
+                    <button type="submit"class="bg-red-500 text-gray-200 rounded hover:bg-red-400 px-6 py-2 focus:outline-none mx-1"> X </button>
                 </form>
-                <button  onclick="modify({{paramedic[0]}})"/> mod</button>
+                <button   class="bg-green-500 text-gray-200 rounded hover:bg-green-400 px-6 py-2 focus:outline-none mx-10" onclick="modify({{paramedic[0]}})"/> М</button>
             </td>
 
         </tr>
@@ -26,13 +26,13 @@
     </table>
 
     <form action="/paramedics" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <input type="text" name="name"id ="name-form" placeholder="name">
-        <input type="text" name="especiality" id="especiality-form"  placeholder="especiality">
-        <input type="text" name="phone" id="phone-form" placeholder="phone">
-        <input type="text" name="address" id="address-form" placeholder="address">
+        <input type="text" name="name"id ="name-form" placeholder="ИМЯ">
+        <input type="text" name="especiality" id="especiality-form"  placeholder="СПЕЦИАЛЬНОСТЬ">
+        <input type="text" name="phone" id="phone-form" placeholder="ТЕЛЕФОН">
+        <input type="text" name="address" id="address-form" placeholder="АДРЕС">
         <input type="hidden" name="id" id="id" value="">
         <input type="hidden" name="mody" id="mody" value=0 >
-        <button type="submit" id="btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shad    ow-outline"> add paramedic </button>
+        <button type="submit" id="btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shad    ow-outline"> ДОБАВИТЬ </button>
         </form>
     <script>
         function modify(e){
@@ -42,7 +42,7 @@
             document.getElementById("address-form").value = document.getElementById(`address\\\\${e}`).innerHTML
             document.getElementById("mody").value = 1
             document.getElementById("id").value = e
-            document.getElementById("btn").innerHTML= "modification"
+            document.getElementById("btn").innerHTML= "ИЗМЕНИТЬ"
         }
     </script>
 
