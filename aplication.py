@@ -6,7 +6,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 import os.path
 
-BASE_DIR = ospath.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "cmslibmed.db")
 
 app = Flask(__name__)
