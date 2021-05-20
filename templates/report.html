@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 
 {% block main%}
+<form action="/report" method="post">
+    <input type="DATE" id="date" name="date_init">
+    <input type="DATE" id="date2" name="date_final">
+    <button type="SUBMIT">search </button>
+</form>
 <table class="w-screen text-xs">
     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
         <td class="py-3 px-2 text-xs text-center">№</td>
@@ -34,10 +39,6 @@
         <td>{{customer[9]}}</td>
         <td>{{customer[20]}} /{{customer[25]}} / {{customer[30]}}</td>
         <td>{{customer[34]}}</td>
-        <td><form method="post" action="/deletemain">
-                <input type="HIDDEN" name="id_delete"  value ={{customer[0]}}>
-                <button type="submit">x</button>
-            </form>
     </tr>
     {% endfor %}
 </table>

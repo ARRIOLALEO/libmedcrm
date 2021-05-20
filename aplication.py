@@ -1,4 +1,5 @@
 from flask import Flask, g, render_template, request, session, redirect
+from flask.templating import render_template_string
 from helpers import login_require
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
@@ -103,13 +104,6 @@ def doctors():
 def search():
     if request.method == "GET":
         return "here we will have our search"
-
-
-@app.route("/report")
-@login_require
-def reports():
-    return "here we will get the reports"
-
 
 # this is our login app
 
@@ -509,3 +503,22 @@ def deletedispacher():
             return redirect("/dispachers")
     else:
         return redirect("/dispahcers")
+
+@app.route("/report", methods=["GET","POST"])
+@login_require
+def report():
+    if request.method == "GET":
+        return render_template("report.html")
+    else:
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            date_init = request.form.get("date_init")
+            date_end = request.form.get("date_final")
+            all_orders = cur.execute(
+                "select * FROM orders  INNER JOIN clients  ON clients.id=orders.id_client INNER JOIN doctors ON orders.doctor=doctors.id INNER JOIN paramedics ON paramedics.id = orders.paramedic INNER JOIN drivers ON drivers.id=orders.driver INNER JOIN dispachers ON dispachers.id=orders.dispacher WHERE orders.Timestamp BETWEEN (?) and (?) ",(date_init, date_end, )
+             )
+            customers = all_orders.fetchall()
+            return render_template("report.html", customers=customers)
+ 
+
+
